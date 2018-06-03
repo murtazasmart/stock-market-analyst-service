@@ -14,6 +14,8 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.stock_market_sim.analyst_service.stock_analyst.model.Player;
+import org.stock_market_sim.analyst_service.stock_analyst.model.Recommendation;
 import org.stock_market_sim.analyst_service.stock_analyst.model.Trend;
 import org.stock_market_sim.analyst_service.stock_analyst.services.TrendService;
 
@@ -26,12 +28,28 @@ public class TrendResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Trend addTrend(Trend trend){
-		getHelp();
-		return trendService.addTrend(trend);
+	public List<Recommendation> reqHelp(Player player){
+		System.out.println("mmmmmm"+player.getUser()); 
+		System.out.println("mmmmmm"+player.getGameId()); 
+		return sendResult(player);
+		//getHelp();
+		//return trendService.addTrend(trend);
 		
 	}
 	
+	
+	
+//POST
+	//Consumes(MediaType.APPLICATION_JSON)
+	//Produces(MediaType.APPLICATION_JSON)
+//	public Trend addTrend(Trend trend){
+//		getHelp();
+//		return trendService.addTrend(trend);
+//		
+//	}
+	public List<Recommendation> sendResult(Player player){
+		return trendService.sendResult(player);  
+	}
 	public void getHelp(){
 		Client client =ClientBuilder.newClient();
 		
