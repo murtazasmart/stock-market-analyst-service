@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.stock_market_sim.analyst_service.stock_analyst.database.DBConnect;
+import org.stock_market_sim.analyst_service.stock_analyst.model.MarketEvent;
 import org.stock_market_sim.analyst_service.stock_analyst.model.Player;
 import org.stock_market_sim.analyst_service.stock_analyst.model.Trend;
 import org.stock_market_sim.analyst_service.stock_analyst.model.Recommendation;
@@ -13,12 +14,22 @@ import org.stock_market_sim.analyst_service.stock_analyst.model.Recommendation;
 public class TrendService {
 	private DBConnect dbconnect= new DBConnect();
 	private String query;
-
+	
+	public MarketEvent addMarketEvents(MarketEvent marketEvent){
+		//String sector="xx";
+		query="Insert into event_tab ( round, event_name, type, entity) values ("+marketEvent.getRound()+",'"+marketEvent.getName()+"','"+marketEvent.getType()+"','"+marketEvent.getEntity()+"');";
+		int x= dbconnect.setResult(query);
+		x=x+1; 
+		//trend.setSector(trend.getSector()+"xxxx");
+		return marketEvent;
+	}
+	
 	public Trend addTrend(Trend trend){
-		query="Insert into trend_tab (turn, sector, stock, price_def) values (2,'testSEMEra','testST','5');";
+		String sector="xx";
+		query="Insert into trend_tab (turn, sector, stock, price_def) values ("+trend.getRound()+",'"+sector+"','"+trend.getEntity()+"','"+trend.getValue()+"');";
 		int x= dbconnect.setResult(query);
 		x=x+1;
-		trend.setSector(trend.getSector()+"xxxx");
+		//trend.setSector(trend.getSector()+"xxxx");
 		return trend;
 	}
 	

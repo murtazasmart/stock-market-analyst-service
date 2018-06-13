@@ -14,6 +14,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.stock_market_sim.analyst_service.stock_analyst.model.MarketEvent;
 import org.stock_market_sim.analyst_service.stock_analyst.model.Player;
 import org.stock_market_sim.analyst_service.stock_analyst.model.Recommendation;
 import org.stock_market_sim.analyst_service.stock_analyst.model.Trend;
@@ -31,12 +32,45 @@ public class TrendResource {
 	public List<Recommendation> reqHelp(Player player){
 		System.out.println("mmmmmm"+player.getUser()); 
 		System.out.println("mmmmmm"+player.getGameId()); 
+		addTrendstoDB(player.getGameId());
+		addEventstoDB(player.getGameId());
 		return sendResult(player);
 		//getHelp();
 		//return trendService.addTrend(trend);
 		
 	}
 	
+	public void addTrendstoDB(String gameid){
+		//gameid="5b2007adaad91b0030c23d8e";
+		String requrl="https://stock-market-simulator.herokuapp.com/api/v1/game/trends/"+gameid;
+		Client client =ClientBuilder.newClient();
+		
+		WebTarget target =client.target(requrl);
+		Builder builder= target.request(MediaType.APPLICATION_JSON);
+		Response response = builder.get();
+		System.out.println("to hear done MERALK");
+		List <Trend> trends= response.readEntity(new GenericType<List<Trend>>(){});
+		for (Trend trend:trends){
+			trendService.addTrend(trend);
+			System.out.println("mmmmmmxx"+trend.getEntity()+" AND "+trend.getRound()+" AND "+trend.getValue()); 
+		}
+	}
+	
+	public void addEventstoDB(String gameid){
+		//gameid="5b2007adaad91b0030c23d8e";
+		String requrl="https://stock-market-simulator.herokuapp.com/api/v1/game/events/"+gameid;
+		Client client =ClientBuilder.newClient();
+		
+		WebTarget target =client.target(requrl);
+		Builder builder= target.request(MediaType.APPLICATION_JSON);
+		Response response = builder.get();
+		System.out.println("to hear done MERALK");
+		List <MarketEvent> marketEvents= response.readEntity(new GenericType<List<MarketEvent>>(){});
+		for (MarketEvent marketEvent:marketEvents){
+			trendService.addMarketEvents(marketEvent);
+			//System.out.println("mmmmmmxx"+trend.getEntity()+" AND "+trend.getRound()+" AND "+trend.getValue()); 
+		}
+	}
 	
 	
 //POST
@@ -62,6 +96,10 @@ public class TrendResource {
 			
 			System.out.println("mmmmmm"+message.getMessage()); 
 		}
+		
+		
+		
+		
 		//message.
 //		Response response =client.target("http://localhost:8080/testmewanrest/webapi/messages").request(MediaType.APPLICATION_JSON).get();
 //		Messagexx message= response.readEntity(Messagexx.class);
