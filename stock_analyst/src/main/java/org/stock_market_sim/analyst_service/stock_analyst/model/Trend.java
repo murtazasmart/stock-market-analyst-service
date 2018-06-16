@@ -7,7 +7,13 @@ public class Trend {
 	private int round;
 	private String type;
 	private String value;
-	
+	private String sector ;
+	public String getSector() {
+		return sector;
+	}
+	public void setSector(String sector) {
+		this.sector = sector;
+	}
 	public String getEntity() {
 		return entity;
 	}

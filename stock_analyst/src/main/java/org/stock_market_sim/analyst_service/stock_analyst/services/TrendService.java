@@ -25,12 +25,99 @@ public class TrendService {
 	}
 	
 	public Trend addTrend(Trend trend){
-		String sector="xx";
-		query="Insert into trend_tab (turn, sector, stock, price_def) values ("+trend.getRound()+",'"+sector+"','"+trend.getEntity()+"','"+trend.getValue()+"');";
+		if (trend.getSector()==null || trend.getSector()=="") {
+			trend.setSector(trend.getEntity());
+		}
+		//String sector="xx";
+		query="Insert into trend_tab (turn, sector, stock, price) values ("+trend.getRound()+",'"+trend.getSector()+"','"+trend.getEntity()+"','"+trend.getValue()+"');";
 		int x= dbconnect.setResult(query);
 		x=x+1;
 		//trend.setSector(trend.getSector()+"xxxx");
 		return trend;
+	}
+	public int addRecommendation(Recommendation recommendation){
+		//String sector="xx";
+		query="Insert into recommendation_tab (rec_time, type, name, action, duration) values ('"+recommendation.getRectime()+"','"+recommendation.getType()+"','"+recommendation.getName()+"','"+recommendation.getAction()+"',"+recommendation.getDuration()+");";
+		int x= dbconnect.setResult(query);
+		//x=x+1;
+		//trend.setSector(trend.getSector()+"xxxx");
+		return x;
+	}
+	
+	public void calculateRecommendations(int inturn) throws SQLException{
+		int Cturn = 0;
+		String Csector = "";
+		String Cstock = "";
+		Double Cprice = 0.0;
+		
+		
+		query="select distinct sector, stock from trend_tab;";
+		ResultSet res1= dbconnect.getResults(query);
+		System.out.println("myyyyyyyyyy1");
+		if (res1!=null) {
+			while (res1.next()) {
+				String sector=res1.getString("sector");
+				String stock=res1.getString("stock");
+				System.out.println("myyyyyyyyyy11");
+				query="select * from trend_tab where stock='"+stock+"' and sector='"+sector+"' where turn ="+inturn+";";
+				ResultSet res11= dbconnect.getResults(query);
+				if (res11!=null) {
+					while (res11.next()) {
+						System.out.println("xx");
+						Cturn = res11.getInt("turn");
+						Csector = res11.getString("sector");
+						Cstock = res11.getString("stock");
+						Cprice = Double.parseDouble(res11.getString("price"));
+						System.out.println("myyyyyyyyyy111");
+					}
+					
+				}
+				
+				
+				query="select * from trend_tab where stock='"+stock+"' and sector='"+sector+"' and turn >"+inturn+";";
+				ResultSet res2= dbconnect.getResults(query);
+				if (res2!=null) {
+					while (res2.next()) {
+						int Turn = res2.getInt("turn");
+						String Sector = res2.getString("sector");
+						String Stock = res2.getString("stock");
+						Double Price = Double.parseDouble(res2.getString("price")) ;
+						System.out.println("myyyyyyyyyy2");
+						
+						Recommendation r= new Recommendation();
+						if (Cprice < Price) {
+							r.setRectime(""+inturn);
+							r.setAction("BUY");
+							r.setDuration(Cturn-inturn);
+							if (sector == null || sector==stock) {
+								r.setType("sector");
+							}else{
+								r.setType("stock");
+							}
+							r.setName(Stock);
+							int resp=addRecommendation(r);
+						}
+						if (Cprice > Price) {
+							r.setRectime(""+inturn);
+							r.setAction("SELL");
+							r.setDuration(Cturn-inturn);
+							if (sector == null || sector==stock) {
+								r.setType("sector");
+							}else{
+								r.setType("stock");
+							}
+							r.setName(Stock);
+							int resp=addRecommendation(r);
+						}
+						
+						
+					}
+					
+				}
+				
+			}
+		}
+		
 	}
 	
 	public List<Recommendation> sendResult(Player player){

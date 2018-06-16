@@ -1,5 +1,6 @@
 package org.stock_market_sim.analyst_service.stock_analyst.resources;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -34,6 +35,7 @@ public class TrendResource {
 		System.out.println("mmmmmm"+player.getGameId()); 
 		addTrendstoDB(player.getGameId());
 		addEventstoDB(player.getGameId());
+		
 		return sendResult(player);
 		//getHelp();
 		//return trendService.addTrend(trend);
@@ -82,6 +84,16 @@ public class TrendResource {
 //		
 //	}
 	public List<Recommendation> sendResult(Player player){
+		try {
+			System.out.println("mxxxxxxxxxxxxxx");
+			trendService.calculateRecommendations(Integer.parseInt(player.getTurn()));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return trendService.sendResult(player);  
 	}
 	public void getHelp(){
