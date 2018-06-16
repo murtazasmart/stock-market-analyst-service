@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2018 at 03:04 AM
+-- Generation Time: Jun 16, 2018 at 07:52 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -41,10 +41,9 @@ CREATE TABLE `event_tab` (
 --
 
 INSERT INTO `event_tab` (`event_id`, `event_name`, `type`, `round`, `entity`) VALUES
-(1, '', '', 0, ''),
-(2, 'ProfitWarning', 'stock', 1, 'Virtusa'),
-(3, 'ProfitWarning', 'stock', 2, 'Virtusa'),
-(4, 'ProfitWarning', 'stock', 3, 'Virtusa');
+(44, 'ProfitWarning', 'stock', 1, 'Virtusa'),
+(45, 'ProfitWarning', 'stock', 2, 'Virtusa'),
+(46, 'ProfitWarning', 'stock', 3, 'Virtusa');
 
 -- --------------------------------------------------------
 
@@ -65,10 +64,13 @@ CREATE TABLE `recommendation_tab` (
 --
 
 INSERT INTO `recommendation_tab` (`rec_time`, `type`, `name`, `action`, `duration`) VALUES
-('1', 'stock', '99x', 'sell', 3),
-('1', 'sector', 'Technology', 'buy', 5),
-('1', 'stock', '99x', 'sell', 3),
-('1', 'sector', 'Technology', 'buy', 5);
+('1', 'stock', 'WSO2', 'BUY', 1),
+('1', 'stock', 'WSO2', 'SELL', 4),
+('1', 'stock', 'WSO2', 'BUY', 5),
+('1', 'stock', 'WSO2', 'BUY', 6),
+('1', 'stock', 'WSO2', 'BUY', 7),
+('1', 'stock', 'WSO2', 'BUY', 8),
+('1', 'stock', 'WSO2', 'SELL', 9);
 
 -- --------------------------------------------------------
 
@@ -81,46 +83,24 @@ CREATE TABLE `trend_tab` (
   `turn` int(3) NOT NULL,
   `sector` varchar(100) NOT NULL,
   `stock` varchar(100) NOT NULL,
-  `price_def` varchar(5) NOT NULL
+  `price` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `trend_tab`
 --
 
-INSERT INTO `trend_tab` (`trend_id`, `turn`, `sector`, `stock`, `price_def`) VALUES
-(13, 2, 'testSEMEra', 'testST', '5'),
-(14, 2, 'testSEMEra', 'testST', '5'),
-(15, 2, 'testSEMEra', 'testST', '5'),
-(16, 2, 'testSEMEra', 'testST', '5'),
-(17, 2, 'testSEMEra', 'testST', '5'),
-(18, 2, 'testSEMEra', 'testST', '5'),
-(19, 2, 'testSEMEra', 'testST', '5'),
-(20, 2, 'testSEMEra', 'testST', '5'),
-(21, 2, 'testSEMEra', 'testST', '5'),
-(22, 2, 'testSEMEra', 'testST', '5'),
-(23, 2, 'testSEMEra', 'testST', '5'),
-(24, 2, 'testSEMEra', 'testST', '5'),
-(25, 1, 'xx', 'Business', '1'),
-(26, 2, 'xx', 'Business', '-1'),
-(27, 3, 'xx', 'Business', '0'),
-(28, 4, 'xx', 'Business', '-1'),
-(29, 5, 'xx', 'Business', '0'),
-(30, 6, 'xx', 'Business', '0'),
-(31, 7, 'xx', 'Business', '0'),
-(32, 8, 'xx', 'Business', '-1'),
-(33, 9, 'xx', 'Business', '0'),
-(34, 10, 'xx', 'Business', '1'),
-(35, 1, 'xx', 'Virtusa', '-2'),
-(36, 2, 'xx', 'Virtusa', '1'),
-(37, 3, 'xx', 'Virtusa', '2'),
-(38, 4, 'xx', 'Virtusa', '2'),
-(39, 5, 'xx', 'Virtusa', '0'),
-(40, 6, 'xx', 'Virtusa', '2'),
-(41, 7, 'xx', 'Virtusa', '-1'),
-(42, 8, 'xx', 'Virtusa', '2'),
-(43, 9, 'xx', 'Virtusa', '-1'),
-(44, 10, 'xx', 'Virtusa', '-1');
+INSERT INTO `trend_tab` (`trend_id`, `turn`, `sector`, `stock`, `price`) VALUES
+(175, 1, 'Technology', 'WSO2', '1'),
+(176, 2, 'Technology', 'WSO2', '2'),
+(177, 3, 'Technology', 'WSO2', '0'),
+(178, 4, 'Technology', 'WSO2', '0'),
+(179, 5, 'Technology', 'WSO2', '-1'),
+(180, 6, 'Technology', 'WSO2', '1'),
+(181, 7, 'Technology', 'WSO2', '2'),
+(182, 8, 'Technology', 'WSO2', '2'),
+(183, 9, 'Technology', 'WSO2', '1'),
+(184, 10, 'Technology', 'WSO2', '-2');
 
 --
 -- Indexes for dumped tables
@@ -146,12 +126,12 @@ ALTER TABLE `trend_tab`
 -- AUTO_INCREMENT for table `event_tab`
 --
 ALTER TABLE `event_tab`
-  MODIFY `event_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `event_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT for table `trend_tab`
 --
 ALTER TABLE `trend_tab`
-  MODIFY `trend_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;COMMIT;
+  MODIFY `trend_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

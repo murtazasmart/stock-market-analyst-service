@@ -48,5 +48,12 @@ public class DBConnect {
         
         return res;
     }
+	public int resetDB(String resetType){
+		int ret;
+		ret=setResult("delete from recommendation_tab;");
+		ret=setResult("delete from event_tab;");
+		ret=setResult("delete from trend_tab;");
+		return ret; 
+	}
 
 }

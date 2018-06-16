@@ -33,6 +33,7 @@ public class TrendResource {
 	public List<Recommendation> reqHelp(Player player){
 		System.out.println("mmmmmm"+player.getUser()); 
 		System.out.println("mmmmmm"+player.getGameId()); 
+		trendService.resetDataBase("");  
 		addTrendstoDB(player.getGameId());
 		addEventstoDB(player.getGameId());
 		

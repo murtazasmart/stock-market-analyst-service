@@ -24,6 +24,9 @@ public class TrendService {
 		return marketEvent;
 	}
 	
+	public void resetDataBase(String resttype){
+		int x=dbconnect.resetDB(resttype);
+	}
 	public Trend addTrend(Trend trend){
 		if (trend.getSector()==null || trend.getSector()=="") {
 			trend.setSector(trend.getEntity());
@@ -76,6 +79,7 @@ public class TrendService {
 				
 				query="select * from trend_tab where stock='"+stock+"' and sector='"+sector+"' and turn >"+inturn+";";
 				ResultSet res2= dbconnect.getResults(query);
+				int probebility= 333;//(int)(Math.random()*10);
 				if (res2!=null) {
 					while (res2.next()) {
 						int Turn = res2.getInt("turn");
@@ -85,30 +89,44 @@ public class TrendService {
 						System.out.println("myyyyyyyyyy2");
 						
 						Recommendation r= new Recommendation();
+						r.setRectime(""+inturn);
 						if (Cprice < Price) {
-							r.setRectime(""+inturn);
+							if (probebility==2) {
+								r.setAction("SELL");
+							}else {
 							r.setAction("BUY");
-							r.setDuration(Cturn-inturn);
-							if (sector == null || sector==stock) {
-								r.setType("sector");
-							}else{
-								r.setType("stock");
 							}
-							r.setName(Stock);
-							int resp=addRecommendation(r);
+							//r.setDuration(Cturn-inturn);
+//							if (sector == null || sector==stock) {
+//								r.setType("sector");
+//							}else{
+//								r.setType("stock");
+//							}
+//							r.setName(Stock);
+//							int resp=addRecommendation(r);
 						}
+						
 						if (Cprice > Price) {
-							r.setRectime(""+inturn);
-							r.setAction("SELL");
-							r.setDuration(Cturn-inturn);
-							if (sector == null || sector==stock) {
-								r.setType("sector");
-							}else{
-								r.setType("stock");
+							//r.setRectime(""+inturn);
+							if (probebility==4) {
+								r.setAction("BUY");
 							}
-							r.setName(Stock);
+							r.setAction("SELL");
+						}
+						r.setDuration(Turn-inturn);
+						//r.setDuration(Cturn-inturn);
+						if (sector == null || sector==stock) {
+							r.setType("sector");
+						}else{
+							r.setType("stock");
+						}
+						r.setName(Stock);
+						
+						 probebility= 1;//(int)(Math.random()*10);
+						if ((probebility==1 ||probebility==3 ||probebility==5 ||probebility==7 ||probebility==9) && r.getAction()!=null ) {
 							int resp=addRecommendation(r);
 						}
+						
 						
 						
 					}
