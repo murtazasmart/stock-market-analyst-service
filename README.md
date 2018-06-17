@@ -1,6 +1,3 @@
-## Keep in mind the following while running ##
-  * Tomcat v7 is the recommended version to be used while running the code. The installation for it can be found at the following link (mekala please add the link)
-
 ## How to run the code ##
   * Method 1 - using Eclipse IDE
     * Go to File -> Import
