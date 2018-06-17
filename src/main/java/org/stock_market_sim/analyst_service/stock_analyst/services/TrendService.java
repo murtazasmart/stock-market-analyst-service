@@ -176,6 +176,7 @@ public class TrendService {
 //		      System.out.println("element " + j + ": " + recommendationAL.get(j) );
 		
 		//new ArrayList<Message>(messages.values());
+		dbconnect.disconnect();
 		return recommendationAL;
 		//return ArrayList<Recommendation>(recommendationAL.getClass());
 	}
