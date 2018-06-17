@@ -5,8 +5,6 @@ target/
 libs/
 tmp/
 node_modules/
-jaxws/jaxws-client/src/main/
-jaxws/jaxws-endpoint/src/main/webapp/WEB-INF/wsdl/
  
 # OS Files #
 .DS_Store
@@ -43,27 +41,6 @@ Desktop.ini
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
-
-######################
-# NetBeans
-######################
-nbproject/
-build/
-nbbuild/
-dist/
-nbdist/
-nbactions.xml
-nb-configuration.xml
- 
-######################
-# IDEA
-######################
-*.iml
-*.ipr
-*.iws
-.idea/
-atlassian-ide-plugin.xml
-
  
 ######################
 # Eclipse
