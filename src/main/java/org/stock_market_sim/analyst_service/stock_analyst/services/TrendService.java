@@ -28,9 +28,12 @@ public class TrendService {
 		int x=dbconnect.resetDB(resttype);
 	}
 	public Trend addTrend(Trend trend){
-		if (trend.getSector()==null || trend.getSector()=="") {
-			trend.setSector(trend.getEntity());
+		
+		if ( trend.getType().equals("sector")) {
+			
+			trend.setSector(trend.getEntity()); 
 		}
+		
 		//String sector="xx";
 		query="Insert into trend_tab (turn, sector, stock, price) values ("+trend.getRound()+",'"+trend.getSector()+"','"+trend.getEntity()+"','"+trend.getValue()+"');";
 		int x= dbconnect.setResult(query);
@@ -62,7 +65,7 @@ public class TrendService {
 				String sector=res1.getString("sector");
 				String stock=res1.getString("stock");
 				System.out.println("myyyyyyyyyy11");
-				query="select * from trend_tab where stock='"+stock+"' and sector='"+sector+"' where turn ="+inturn+";";
+				query="select * from trend_tab where stock='"+stock+"' and sector='"+sector+"' and turn ="+inturn+";";
 				ResultSet res11= dbconnect.getResults(query);
 				if (res11!=null) {
 					while (res11.next()) {
@@ -92,9 +95,9 @@ public class TrendService {
 						r.setRectime(""+inturn);
 						if (Cprice < Price) {
 							if (probebility==2) {
-								r.setAction("SELL");
+								r.setAction("BUY");
 							}else {
-							r.setAction("BUY");
+							r.setAction("SELL");
 							}
 							//r.setDuration(Cturn-inturn);
 //							if (sector == null || sector==stock) {
@@ -109,13 +112,13 @@ public class TrendService {
 						if (Cprice > Price) {
 							//r.setRectime(""+inturn);
 							if (probebility==4) {
-								r.setAction("BUY");
+								r.setAction("SELL");
 							}
-							r.setAction("SELL");
+							r.setAction("BUY");
 						}
 						r.setDuration(Turn-inturn);
 						//r.setDuration(Cturn-inturn);
-						if (sector == null || sector==stock) {
+						if (sector.equals(stock)) {
 							r.setType("sector");
 						}else{
 							r.setType("stock");
