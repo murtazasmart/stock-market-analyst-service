@@ -24,10 +24,10 @@ public class TrendService {
 		return marketEvent;
 	}
 	
-	public void resetDataBase(String resttype){
-		int x=dbconnect.resetDB(resttype);
+	public void resetDataBase(String resttype,String gameid ,String useId){
+		int x=dbconnect.resetDB(resttype, gameid , useId);
 	}
-	public Trend addTrend(Trend trend){
+	public Trend addTrend(Trend trend, String gameid ,String useId){
 		
 		if ( trend.getType().equals("sector")) {
 			
@@ -35,29 +35,29 @@ public class TrendService {
 		}
 		
 		//String sector="xx";
-		query="Insert into trend_tab (turn, sector, stock, price) values ("+trend.getRound()+",'"+trend.getSector()+"','"+trend.getEntity()+"','"+trend.getValue()+"');";
+		query="Insert into trend_tab (turn, sector, stock, price, game_id, user_id) values ("+trend.getRound()+",'"+trend.getSector()+"','"+trend.getEntity()+"','"+trend.getValue()+"','"+gameid+"','"+useId+"');";
 		int x= dbconnect.setResult(query);
 		x=x+1;
 		//trend.setSector(trend.getSector()+"xxxx");
 		return trend;
 	}
-	public int addRecommendation(Recommendation recommendation){
+	public int addRecommendation(Recommendation recommendation,String gameId ,String useId){
 		//String sector="xx";
-		query="Insert into recommendation_tab (rec_time, type, name, action, duration) values ('"+recommendation.getRectime()+"','"+recommendation.getType()+"','"+recommendation.getName()+"','"+recommendation.getAction()+"',"+recommendation.getDuration()+");";
+		query="Insert into recommendation_tab (rec_time, type, name, action, duration, game_id, user_id) values ('"+recommendation.getRectime()+"','"+recommendation.getType()+"','"+recommendation.getName()+"','"+recommendation.getAction()+"',"+recommendation.getDuration()+",'"+gameId+"','"+useId+"');";
 		int x= dbconnect.setResult(query);
 		//x=x+1;
 		//trend.setSector(trend.getSector()+"xxxx");
 		return x;
 	}
 	
-	public void calculateRecommendations(int inturn) throws SQLException{
+	public void calculateRecommendations(int inturn,String gameId ,String useId) throws SQLException{
 		int Cturn = 0;
 		String Csector = "";
 		String Cstock = "";
 		Double Cprice = 0.0;
 		
 		
-		query="select distinct sector, stock from trend_tab;";
+		query="select distinct sector, stock from trend_tab where game_id='"+gameId+"' and user_id ='"+useId+"';";
 		ResultSet res1= dbconnect.getResults(query);
 		System.out.println("myyyyyyyyyy1");
 		if (res1!=null) {
@@ -65,7 +65,7 @@ public class TrendService {
 				String sector=res1.getString("sector");
 				String stock=res1.getString("stock");
 				System.out.println("myyyyyyyyyy11");
-				query="select * from trend_tab where stock='"+stock+"' and sector='"+sector+"' and turn ="+inturn+";";
+				query="select * from trend_tab where stock='"+stock+"' and sector='"+sector+"' and turn ="+inturn+" and game_id='"+gameId+"' and user_id ='"+useId+"';";
 				ResultSet res11= dbconnect.getResults(query);
 				if (res11!=null) {
 					while (res11.next()) {
@@ -80,7 +80,7 @@ public class TrendService {
 				}
 				
 				
-				query="select * from trend_tab where stock='"+stock+"' and sector='"+sector+"' and turn >"+inturn+";";
+				query="select * from trend_tab where stock='"+stock+"' and sector='"+sector+"' and turn >"+inturn+" and game_id='"+gameId+"' and user_id ='"+useId+"';";
 				ResultSet res2= dbconnect.getResults(query);
 				int probebility= 333;//(int)(Math.random()*10);
 				if (res2!=null) {
@@ -95,9 +95,9 @@ public class TrendService {
 						r.setRectime(""+inturn);
 						if (Cprice < Price) {
 							if (probebility==2) {
-								r.setAction("BUY");
+								r.setAction("SELL");
 							}else {
-							r.setAction("SELL");
+							r.setAction("BUY");
 							}
 							//r.setDuration(Cturn-inturn);
 //							if (sector == null || sector==stock) {
@@ -112,9 +112,9 @@ public class TrendService {
 						if (Cprice > Price) {
 							//r.setRectime(""+inturn);
 							if (probebility==4) {
-								r.setAction("SELL");
+								r.setAction("BUY");
 							}
-							r.setAction("BUY");
+							r.setAction("SELL");
 						}
 						r.setDuration(Turn-inturn);
 						//r.setDuration(Cturn-inturn);
@@ -127,7 +127,7 @@ public class TrendService {
 						
 						 probebility= 1;//(int)(Math.random()*10);
 						if ((probebility==1 ||probebility==3 ||probebility==5 ||probebility==7 ||probebility==9) && r.getAction()!=null ) {
-							int resp=addRecommendation(r);
+							int resp=addRecommendation(r, gameId , useId);
 						}
 						
 						
@@ -141,10 +141,10 @@ public class TrendService {
 		
 	}
 	
-	public List<Recommendation> sendResult(Player player){
+	public List<Recommendation> sendResult(Player player,String gameId ,String useId){
 		ArrayList<Recommendation> recommendationAL = new ArrayList<Recommendation>();
 		
-		query="select * from recommendation_tab;";
+		query="select * from recommendation_tab where game_id='"+gameId+"' and user_id ='"+useId+"';";
 		ResultSet res= dbconnect.getResults(query);
 		
 		if (res!=null) {

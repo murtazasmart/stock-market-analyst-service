@@ -8,14 +8,14 @@ import java.sql.Statement;
 
 public class DBConnect {
 	//static final String url="jdbc:mysql://localhost:3306/analyst_db";
-	//static final String url="jdbc:mysql://www.databases-auth.000webhost.com:3306/id6218335_analyst_db";
+	
 	static final String url="jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2243277";
 	Statement st;
 	
 	public Statement connect(){
 		try{
 		Class.forName("com.mysql.jdbc.Driver");
-		//Connection conn= DriverManager.getConnection(url, "id6218335_mekala","mekala");
+		//Connection conn= DriverManager.getConnection(url, "root","");
 		Connection conn= DriverManager.getConnection(url, "sql2243277","cG3%aK9%");
 		st=conn.createStatement();
 		}catch(SQLException e){
@@ -59,11 +59,11 @@ public class DBConnect {
         
         return res;
     }
-	public int resetDB(String resetType){
+	public int resetDB(String resetType,String gameId ,String useId){
 		int ret;
-		ret=setResult("delete from recommendation_tab;");
+		ret=setResult("delete from recommendation_tab where game_id='"+gameId+"' and user_id ='"+useId+"';");
 		ret=setResult("delete from event_tab;");
-		ret=setResult("delete from trend_tab;");
+		ret=setResult("delete from trend_tab where game_id='"+gameId+"' and user_id ='"+useId+"';");
 		return ret; 
 	}
 

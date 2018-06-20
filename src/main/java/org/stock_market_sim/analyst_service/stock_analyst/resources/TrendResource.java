@@ -33,17 +33,17 @@ public class TrendResource {
 	public List<Recommendation> reqHelp(Player player){
 		System.out.println("mmmmmm"+player.getUser()); 
 		System.out.println("mmmmmm"+player.getGameId()); 
-		trendService.resetDataBase("");  
-		addTrendstoDB(player.getGameId());
+		trendService.resetDataBase("",player.getGameId(),player.getUser());  
+		addTrendstoDB(player.getGameId(),player.getUser());
 		addEventstoDB(player.getGameId());
 		
-		return sendResult(player);
+		return sendResult(player,player.getGameId(),player.getUser());
 		//getHelp();
 		//return trendService.addTrend(trend);
 		
 	}
 	
-	public void addTrendstoDB(String gameid){
+	public void addTrendstoDB(String gameid ,String useId){
 		//gameid="5b2007adaad91b0030c23d8e";
 		String requrl="https://stock-market-simulator.herokuapp.com/api/v1/game/trends/"+gameid;
 		Client client =ClientBuilder.newClient();
@@ -54,7 +54,7 @@ public class TrendResource {
 		System.out.println("to hear done MERALK");
 		List <Trend> trends= response.readEntity(new GenericType<List<Trend>>(){});
 		for (Trend trend:trends){
-			trendService.addTrend(trend);
+			trendService.addTrend(trend,gameid,useId);
 			System.out.println("mmmmmmxx"+trend.getEntity()+" AND "+trend.getRound()+" AND "+trend.getValue()); 
 		}
 	}
@@ -84,10 +84,10 @@ public class TrendResource {
 //		return trendService.addTrend(trend);
 //		
 //	}
-	public List<Recommendation> sendResult(Player player){
+	public List<Recommendation> sendResult(Player player, String gameid ,String useId){
 		try {
 			System.out.println("mxxxxxxxxxxxxxx");
-			trendService.calculateRecommendations(Integer.parseInt(player.getTurn()));
+			trendService.calculateRecommendations(Integer.parseInt(player.getTurn()),gameid,useId);
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -95,7 +95,7 @@ public class TrendResource {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return trendService.sendResult(player);  
+		return trendService.sendResult(player,gameid,useId);  
 	}
 	public void getHelp(){
 		Client client =ClientBuilder.newClient();
