@@ -59,22 +59,22 @@ public class TrendService {
 		
 		query="select distinct sector, stock from trend_tab where game_id='"+gameId+"' and user_id ='"+useId+"';";
 		ResultSet res1= dbconnect.getResults(query);
-		System.out.println("myyyyyyyyyy1");
+		
 		if (res1!=null) {
 			while (res1.next()) {
 				String sector=res1.getString("sector");
 				String stock=res1.getString("stock");
-				System.out.println("myyyyyyyyyy11");
+				
 				query="select * from trend_tab where stock='"+stock+"' and sector='"+sector+"' and turn ="+inturn+" and game_id='"+gameId+"' and user_id ='"+useId+"';";
 				ResultSet res11= dbconnect.getResults(query);
 				if (res11!=null) {
 					while (res11.next()) {
-						System.out.println("xx");
+						
 						Cturn = res11.getInt("turn");
 						Csector = res11.getString("sector");
 						Cstock = res11.getString("stock");
 						Cprice = Double.parseDouble(res11.getString("price"));
-						System.out.println("myyyyyyyyyy111");
+						
 					}
 					
 				}
@@ -89,7 +89,7 @@ public class TrendService {
 						String Sector = res2.getString("sector");
 						String Stock = res2.getString("stock");
 						Double Price = Double.parseDouble(res2.getString("price")) ;
-						System.out.println("myyyyyyyyyy2");
+						
 						
 						Recommendation r= new Recommendation();
 						r.setRectime(""+inturn);
@@ -155,14 +155,14 @@ public class TrendService {
 					String name = res.getString("name");
 					String action = res.getString("action");
 					int duration = res.getInt("duration");
-					System.out.println("xx"+name);
+					
 					Recommendation recommendation= new Recommendation();
 					recommendation.setRectime(rectime);
 					recommendation.setType(type);
 					recommendation.setName(name);
 					recommendation.setAction(action);
 					recommendation.setDuration(duration);
-					System.out.println("xy"+recommendation.getDuration());
+					
 					
 					recommendationAL.add(recommendation);
 					//kk++;
@@ -173,8 +173,7 @@ public class TrendService {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("dd");
-		System.out.println("element : " + recommendationAL);
+		
 //		for ( int j=0; j<recommendationAL.size(); j++ )
 //		      System.out.println("element " + j + ": " + recommendationAL.get(j) );
 		
