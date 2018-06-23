@@ -52,10 +52,10 @@ public class TrendResource {
 		Response response = builder.get();
 		
 		List <Trend> trends= response.readEntity(new GenericType<List<Trend>>(){});
-		for (Trend trend:trends){
-			trendService.addTrend(trend,gameid,useId);
+//		for (Trend trend:trends){
+			trendService.addTrends(gameid,useId, trends);
 			
-		}
+//		}
 	}
 	
 	public void addEventstoDB(String gameid){

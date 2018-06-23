@@ -10,7 +10,7 @@ public class DBConnect {
 	//static final String url="jdbc:mysql://localhost:3306/analyst_db";
 	
 	//static final String url="jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2243277";
-	static final String url="jdbc:mysql://mysql7001.site4now.net:3306/db_a3d821_analyst";
+	static final String url="jdbc:mysql://mysql7001.site4now.net:3306/db_a3d821_analyst?allowMultiQueries=true";
 	Connection conn;
 	Statement st;
 	
@@ -54,7 +54,7 @@ public class DBConnect {
     }
 	
 	public int setResult(String query){
-		//query=query+"commit;";
+		query=query+" commit; ";
         int res = 0;
         try{
         Statement st = connect();
@@ -62,6 +62,7 @@ public class DBConnect {
         res = st.executeUpdate(query);
         }
         catch(SQLException| NullPointerException e){
+        	System.out.println(e);
         }finally{
         	disconnect(); 
         }

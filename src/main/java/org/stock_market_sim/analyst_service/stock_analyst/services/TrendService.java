@@ -13,7 +13,7 @@ import org.stock_market_sim.analyst_service.stock_analyst.model.Recommendation;
 
 public class TrendService {
 	private DBConnect dbconnect= new DBConnect();
-	private String query;
+	private String query="";
 	
 	public MarketEvent addMarketEvents(MarketEvent marketEvent){
 		//String sector="xx";
@@ -27,19 +27,30 @@ public class TrendService {
 	public void resetDataBase(String resttype,String gameid ,String useId){
 		int x=dbconnect.resetDB(resttype, gameid , useId);
 	}
-	public Trend addTrend(Trend trend, String gameid ,String useId){
+	int x=2;
+	public Trend addTrends(String gameid ,String useId, List<Trend> trends){
 		
-		if ( trend.getType().equals("sector")) {
-			
-			trend.setSector(trend.getEntity()); 
+		for (Trend trend:trends){		
+			String squery="Insert into trend_tab (turn, sector, stock, price, game_id, user_id) values ("+trend.getRound()+",'"+trend.getSector()+"','"+trend.getEntity()+"','"+trend.getValue()+"','"+gameid+"','"+useId+"');";
+			query=query+squery;
 		}
 		
+//		if ( trend.getType().equals("sector")) {
+//			
+//			trend.setSector(trend.getEntity()); 
+//		}
+		
 		//String sector="xx";
-		query="Insert into trend_tab (turn, sector, stock, price, game_id, user_id) values ("+trend.getRound()+",'"+trend.getSector()+"','"+trend.getEntity()+"','"+trend.getValue()+"','"+gameid+"','"+useId+"');";
-		int x= dbconnect.setResult(query);
+//		String squery=" Insert into trend_tab (turn, sector, stock, price, game_id, user_id) values ("+trend.getRound()+",'"+trend.getSector()+"','"+trend.getEntity()+"','"+trend.getValue()+"','"+gameid+"','"+useId+"');";
+//		query=query+squery;
+		System.out.println(query);
+//		if (x==10) {
+			int xxxx= dbconnect.setResult(query);
+//		}
+		
 		x=x+1;
 		//trend.setSector(trend.getSector()+"xxxx");
-		return trend;
+		return trends.get(0);
 	}
 	public int addRecommendation(Recommendation recommendation,String gameId ,String useId){
 		//String sector="xx";
