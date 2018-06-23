@@ -48,6 +48,7 @@ public class DBConnect {
     }
 	
 	public int setResult(String query){
+		query=query+"commit;";
         int res = 0;
         try{
         Statement st = connect();
