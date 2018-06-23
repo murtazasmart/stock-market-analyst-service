@@ -168,19 +168,16 @@ public class TrendService {
 					//kk++;
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				System.out.println("eee"+e);
 				e.printStackTrace();
 			}
 		}
 		
-//		for ( int j=0; j<recommendationAL.size(); j++ )
-//		      System.out.println("element " + j + ": " + recommendationAL.get(j) );
-		
-		//new ArrayList<Message>(messages.values());
+
 		dbconnect.disconnect();
 		return recommendationAL;
-		//return ArrayList<Recommendation>(recommendationAL.getClass());
+		
 	}
 	
 }
