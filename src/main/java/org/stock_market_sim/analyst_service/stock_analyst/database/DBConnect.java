@@ -9,14 +9,17 @@ import java.sql.Statement;
 public class DBConnect {
 	//static final String url="jdbc:mysql://localhost:3306/analyst_db";
 	
-	static final String url="jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2243277";
+	//static final String url="jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2243277";
+	static final String url="jdbc:mysql://mysql7001.site4now.net:3306/db_a3d821_analyst";
+	Connection conn;
 	Statement st;
 	
 	public Statement connect(){
 		try{
 		Class.forName("com.mysql.jdbc.Driver");
 		//Connection conn= DriverManager.getConnection(url, "root","");
-		Connection conn= DriverManager.getConnection(url, "sql2243277","cG3%aK9%");
+		//Connection conn= DriverManager.getConnection(url, "sql2243277","cG3%aK9%");
+		conn= DriverManager.getConnection(url, "a3d821_analyst","mekala1234");
 		st=conn.createStatement();
 		}catch(SQLException e){
 			System.out.println("ERROR: Database Error :"+e);
@@ -28,7 +31,9 @@ public class DBConnect {
 	}
 	public Statement disconnect(){
 		try {
-			st.close();
+			System.out.println("ERROR: Database Error :");  
+			conn.close();
+			//st.close();
 		} catch (SQLException e) {
 			
 			e.printStackTrace(); 

@@ -36,7 +36,7 @@ public class TrendResource {
 		System.out.println("Game id: "+player.getGameId()); 
 		trendService.resetDataBase("",player.getGameId(),player.getUser());  
 		addTrendstoDB(player.getGameId(),player.getUser());
-		//addEventstoDB(player.getGameId());
+		addEventstoDB(player.getGameId());
 		
 		return sendResult(player,player.getGameId(),player.getUser());
 		
