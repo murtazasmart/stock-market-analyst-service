@@ -31,9 +31,10 @@ public class DBConnect {
 	}
 	public Statement disconnect(){
 		try {
-			System.out.println("ERROR: Database Error :");  
+			
+			System.out.println("Disconnected");  
 			conn.close();
-			//st.close();
+			st.close();
 		} catch (SQLException e) {
 			
 			e.printStackTrace(); 
@@ -53,7 +54,7 @@ public class DBConnect {
     }
 	
 	public int setResult(String query){
-		query=query+"commit;";
+		//query=query+"commit;";
         int res = 0;
         try{
         Statement st = connect();
@@ -61,6 +62,8 @@ public class DBConnect {
         res = st.executeUpdate(query);
         }
         catch(SQLException| NullPointerException e){
+        }finally{
+        	disconnect(); 
         }
         
         return res;
