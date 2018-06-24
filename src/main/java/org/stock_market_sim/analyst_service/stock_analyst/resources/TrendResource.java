@@ -7,6 +7,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -31,14 +32,14 @@ public class TrendResource {
 	TrendService trendService = new TrendService();
 	
 	@GET
-	//@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/{user}/{gameid}/{turn}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response xxxx(){
+	public Response xxxx(@PathParam("user") String user,@PathParam("gameid") String gameid,@PathParam("turn") String turn){
 		Gson gson = new Gson();
-		String user="xxMekala";
-		String gameid="5b2eb0a2c8bf8f00304528eb";
+		//String user="xxMekala";
+		//String gameid="5b2eb0a2c8bf8f00304528eb";
 		Player player = new Player();
-		player.setTurn("1");
+		player.setTurn(turn);
 		player.setGameId(gameid);
 		player.setUser(user);
 		trendService.resetDataBase("",gameid,user);  
