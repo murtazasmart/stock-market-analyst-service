@@ -55,16 +55,12 @@ public class TrendResource {
 			//return sendResult(player,player.getGameId(),player.getUser());
 		}
 		else {
-			return Response
-				      .status(200)
+			return Response.ok()
+				      //.status(200)
 				      .header("Access-Control-Allow-Origin", "*")
-				      .header("Access-Control-Allow-Credentials", "true")
-				      .header("Access-Control-Allow-Headers",
-				        "origin, content-type, accept, authorization")
-				      .header("Access-Control-Allow-Methods", 
-				        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-				      .entity("[]")
-				      .build();
+				      .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+						.entity("[]")
+				      .allow("OPTIONS").build();//.build();
 			//return null;
 			//return sendResult(player,player.getGameId(),player.getUser());
 		}
