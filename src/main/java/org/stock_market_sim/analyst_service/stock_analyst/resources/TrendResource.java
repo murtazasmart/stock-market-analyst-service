@@ -33,8 +33,12 @@ public class TrendResource {
 	@GET
 	//@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String xxxx(){
-	return"hi baby";
+	public Response xxxx(){
+		return Response.ok()
+		      .header("Access-Control-Allow-Origin", "*")
+		      .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.entity("{asdasd}")
+		      .allow("OPTIONS").build();
 	}
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
