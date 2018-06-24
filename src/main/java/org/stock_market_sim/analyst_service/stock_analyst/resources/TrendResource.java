@@ -54,10 +54,10 @@ public class TrendResource {
 			addEventstoDB(player.getGameId());
 			Gson gson = new Gson();
 			return Response.ok()
-					.entity(gson.toJson(sendResult(player,player.getGameId(),player.getUser())))
 				      //.status(200)
 				      .header("Access-Control-Allow-Origin", "*")
 				      .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+						.entity(gson.toJson(sendResult(player,player.getGameId(),player.getUser())))
 				      .allow("OPTIONS").build();//.build();
 			//return sendResult(player,player.getGameId(),player.getUser());
 		}
