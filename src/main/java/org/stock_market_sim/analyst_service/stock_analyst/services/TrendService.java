@@ -102,7 +102,8 @@ public class TrendService {
 				
 				query="select * from trend_tab where stock='"+stock+"' and sector='"+sector+"' and turn >"+inturn+" and game_id='"+gameId+"' and user_id ='"+useId+"';";
 				ResultSet res2= dbconnect.getResults(query);
-				int probebility= 333;//(int)(Math.random()*10);
+				//int probebility= 333;
+				int probebility=(int)(Math.random()*10);
 				
 				if (res2!=null) {
 					Recommendation r;
@@ -147,7 +148,8 @@ public class TrendService {
 						}
 						r.setName(Stock);
 						
-						 probebility= 1;//(int)(Math.random()*10);
+						// probebility= 1;
+						 probebility= (int)(Math.random()*10);
 						if ((probebility==1 ||probebility==3 ||probebility==5 ||probebility==7 ||probebility==9) && r.getAction()!=null ) {
 							//int resp=addRecommendation(r, gameId , useId);
 							String squery="Insert into recommendation_tab (rec_time, type, name, action, duration, game_id, user_id) values ('"+r.getRectime()+"','"+r.getType()+"','"+r.getName()+"','"+r.getAction()+"',"+r.getDuration()+",'"+gameId+"','"+useId+"');";

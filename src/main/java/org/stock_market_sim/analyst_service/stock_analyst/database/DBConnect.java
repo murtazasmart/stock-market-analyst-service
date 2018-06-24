@@ -45,7 +45,9 @@ public class DBConnect {
         ResultSet res = null;
         try{
         connect();
+        System.out.println("Select Q connect");
         res = st.executeQuery(query);
+        System.out.println("Select Q disconnect");
         }
         catch(SQLException| NullPointerException e){
             
