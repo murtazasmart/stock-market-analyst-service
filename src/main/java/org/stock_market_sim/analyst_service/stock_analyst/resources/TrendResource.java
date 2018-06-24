@@ -45,36 +45,42 @@ public class TrendResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response reqHelp(Player player){
 	//public 	List<Recommendation> reqHelp(Player player){
-		System.out.println("Analyser Started");
-		System.out.println("User: "+player.getUser()); 
-		System.out.println("Game id: "+player.getGameId()); 
-		trendService.resetDataBase("",player.getGameId(),player.getUser());  
-		Boolean validity=addTrendstoDB(player.getGameId(),player.getUser());
-		if (validity.equals(true)) {
-			addEventstoDB(player.getGameId());
-			Gson gson = new Gson();
-			return Response.ok()
-				      //.status(200)
-				      .header("Access-Control-Allow-Origin", "*")
-				      .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
-						.entity(gson.toJson(sendResult(player,player.getGameId(),player.getUser())))
-				      .allow("OPTIONS").build();//.build();
-			//return sendResult(player,player.getGameId(),player.getUser());
-		}
-		else {
-			return Response
-				      .status(200)
-				      .header("Access-Control-Allow-Origin", "*")
-				      .header("Access-Control-Allow-Credentials", "true")
-				      .header("Access-Control-Allow-Headers",
-				        "origin, content-type, accept, authorization")
-				      .header("Access-Control-Allow-Methods", 
-				        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-				      .entity("[]")
-				      .build();
-			//return null;
-			//return sendResult(player,player.getGameId(),player.getUser());
-		}
+		Gson gson = new Gson();
+		return Response.ok()
+			      //.status(200)
+			      .header("Access-Control-Allow-Origin", "*")
+			      .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+					.entity(gson.toJson(sendResult(player,player.getGameId(),player.getUser())))
+			      .allow("OPTIONS").build();//.build();
+//		System.out.println("Analyser Started");
+//		System.out.println("User: "+player.getUser()); 
+//		System.out.println("Game id: "+player.getGameId()); 
+//		trendService.resetDataBase("",player.getGameId(),player.getUser());  
+//		Boolean validity=addTrendstoDB(player.getGameId(),player.getUser());
+//		if (validity.equals(true)) {
+//			addEventstoDB(player.getGameId());
+//			return Response.ok()
+//				      //.status(200)
+//				      .header("Access-Control-Allow-Origin", "*")
+//				      .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+//						.entity(gson.toJson(sendResult(player,player.getGameId(),player.getUser())))
+//				      .allow("OPTIONS").build();//.build();
+//			//return sendResult(player,player.getGameId(),player.getUser());
+//		}
+//		else {
+//			return Response
+//				      .status(200)
+//				      .header("Access-Control-Allow-Origin", "*")
+//				      .header("Access-Control-Allow-Credentials", "true")
+//				      .header("Access-Control-Allow-Headers",
+//				        "origin, content-type, accept, authorization")
+//				      .header("Access-Control-Allow-Methods", 
+//				        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+//				      .entity("[]")
+//				      .build();
+//			//return null;
+//			//return sendResult(player,player.getGameId(),player.getUser());
+//		}
 		
 		
 	}
