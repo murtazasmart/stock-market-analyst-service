@@ -15,19 +15,28 @@ public class TrendService {
 	private DBConnect dbconnect= new DBConnect();
 	private String query="";
 	
-	public MarketEvent addMarketEvents(MarketEvent marketEvent){
+	public MarketEvent addMarketEvents(List<MarketEvent> marketEvents){
 		//String sector="xx";
-		query="Insert into event_tab ( round, event_name, type, entity) values ("+marketEvent.getRound()+",'"+marketEvent.getName()+"','"+marketEvent.getType()+"','"+marketEvent.getEntity()+"');";
+		query="";
+		for (MarketEvent marketEvent:marketEvents){
+			//trendService.addMarketEvents(marketEvent,marketEvents);
+			String squery="Insert into event_tab ( round, event_name, type, entity) values ("+marketEvent.getRound()+",'"+marketEvent.getName()+"','"+marketEvent.getType()+"','"+marketEvent.getEntity()+"');";
+			query=query+squery;
+		}
+		
+		System.out.println(query);
+		//query="Insert into event_tab ( round, event_name, type, entity) values ("+marketEvent.getRound()+",'"+marketEvent.getName()+"','"+marketEvent.getType()+"','"+marketEvent.getEntity()+"');";
 		int x= dbconnect.setResult(query);
-		x=x+1; 
+		//x=x+1; 
 		//trend.setSector(trend.getSector()+"xxxx");
-		return marketEvent;
+		//return marketEvent;
+		return marketEvents.get(0);
 	}
 	
 	public void resetDataBase(String resttype,String gameid ,String useId){
 		int x=dbconnect.resetDB(resttype, gameid , useId);
 	}
-	int x=2;
+	
 	public Trend addTrends(String gameid ,String useId, List<Trend> trends){
 		
 		for (Trend trend:trends){		
@@ -48,14 +57,14 @@ public class TrendService {
 			int xxxx= dbconnect.setResult(query);
 //		}
 		
-		x=x+1;
+		//x=x+1;
 		//trend.setSector(trend.getSector()+"xxxx");
 		return trends.get(0);
 	}
-	public int addRecommendation(Recommendation recommendation,String gameId ,String useId){
+	public int addRecommendation(String qStatement){
 		//String sector="xx";
-		query="Insert into recommendation_tab (rec_time, type, name, action, duration, game_id, user_id) values ('"+recommendation.getRectime()+"','"+recommendation.getType()+"','"+recommendation.getName()+"','"+recommendation.getAction()+"',"+recommendation.getDuration()+",'"+gameId+"','"+useId+"');";
-		int x= dbconnect.setResult(query);
+		//query="Insert into recommendation_tab (rec_time, type, name, action, duration, game_id, user_id) values ('"+recommendation.getRectime()+"','"+recommendation.getType()+"','"+recommendation.getName()+"','"+recommendation.getAction()+"',"+recommendation.getDuration()+",'"+gameId+"','"+useId+"');";
+		int x= dbconnect.setResult(qStatement);
 		//x=x+1;
 		//trend.setSector(trend.getSector()+"xxxx");
 		return x;
@@ -67,7 +76,7 @@ public class TrendService {
 		String Cstock = "";
 		Double Cprice = 0.0;
 		
-		
+		String insquery="";
 		query="select distinct sector, stock from trend_tab where game_id='"+gameId+"' and user_id ='"+useId+"';";
 		ResultSet res1= dbconnect.getResults(query);
 		
@@ -94,7 +103,9 @@ public class TrendService {
 				query="select * from trend_tab where stock='"+stock+"' and sector='"+sector+"' and turn >"+inturn+" and game_id='"+gameId+"' and user_id ='"+useId+"';";
 				ResultSet res2= dbconnect.getResults(query);
 				int probebility= 333;//(int)(Math.random()*10);
+				
 				if (res2!=null) {
+					Recommendation r;
 					while (res2.next()) {
 						int Turn = res2.getInt("turn");
 						String Sector = res2.getString("sector");
@@ -102,7 +113,7 @@ public class TrendService {
 						Double Price = Double.parseDouble(res2.getString("price")) ;
 						
 						
-						Recommendation r= new Recommendation();
+						 r= new Recommendation();
 						r.setRectime(""+inturn);
 						if (Cprice < Price) {
 							if (probebility==2) {
@@ -138,12 +149,15 @@ public class TrendService {
 						
 						 probebility= 1;//(int)(Math.random()*10);
 						if ((probebility==1 ||probebility==3 ||probebility==5 ||probebility==7 ||probebility==9) && r.getAction()!=null ) {
-							int resp=addRecommendation(r, gameId , useId);
+							//int resp=addRecommendation(r, gameId , useId);
+							String squery="Insert into recommendation_tab (rec_time, type, name, action, duration, game_id, user_id) values ('"+r.getRectime()+"','"+r.getType()+"','"+r.getName()+"','"+r.getAction()+"',"+r.getDuration()+",'"+gameId+"','"+useId+"');";
+							insquery=insquery+squery;
 						}
 						
 						
 						
 					}
+					int aa=addRecommendation(insquery);
 					
 				}
 				

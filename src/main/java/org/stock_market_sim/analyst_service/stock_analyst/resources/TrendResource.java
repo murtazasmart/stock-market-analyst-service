@@ -68,10 +68,10 @@ public class TrendResource {
 		Response response = builder.get();
 		
 		List <MarketEvent> marketEvents= response.readEntity(new GenericType<List<MarketEvent>>(){});
-		for (MarketEvent marketEvent:marketEvents){
-			trendService.addMarketEvents(marketEvent);
-			
-		}
+//		for (MarketEvent marketEvent:marketEvents){
+			trendService.addMarketEvents(marketEvents);
+//			
+//		}
 	}
 	
 	

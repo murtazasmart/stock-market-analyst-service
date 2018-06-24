@@ -71,9 +71,11 @@ public class DBConnect {
     }
 	public int resetDB(String resetType,String gameId ,String useId){
 		int ret;
-		ret=setResult("delete from recommendation_tab where game_id='"+gameId+"' and user_id ='"+useId+"';");
-		ret=setResult("delete from event_tab;");
-		ret=setResult("delete from trend_tab where game_id='"+gameId+"' and user_id ='"+useId+"';");
+		String quarryVals="delete from recommendation_tab where game_id='"+gameId+"' and user_id ='"+useId+"'; ";
+		quarryVals=quarryVals+"delete from event_tab; ";
+		quarryVals=quarryVals+"delete from trend_tab where game_id='"+gameId+"' and user_id ='"+useId+"'; ";
+		ret=setResult(quarryVals);
+		
 		return ret; 
 	}
 
