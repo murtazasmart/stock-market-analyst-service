@@ -34,11 +34,44 @@ public class TrendResource {
 	//@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response xxxx(){
-		return Response.ok()
-		      .header("Access-Control-Allow-Origin", "*")
-		      .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
-				.entity("{asdasd}")
-		      .allow("OPTIONS").build();
+		Gson gson = new Gson();
+		String user="xxMekala";
+		String gameid="5b2eb0a2c8bf8f00304528eb";
+		Player player = new Player();
+		player.setTurn("1");
+		player.setGameId(gameid);
+		player.setUser(user);
+		trendService.resetDataBase("",gameid,user);  
+		Boolean validity=addTrendstoDB(gameid,user);
+		if (validity.equals(true)) {
+			addEventstoDB(gameid);
+			return Response.ok()
+				      //.status(200)
+				      .header("Access-Control-Allow-Origin", "*")
+				      .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+						.entity(gson.toJson(sendResult(player,gameid,user)))
+				      .allow("OPTIONS").build();//.build();
+			//return sendResult(player,player.getGameId(),player.getUser());
+		}
+		else {
+			return Response
+				      .status(200)
+				      .header("Access-Control-Allow-Origin", "*")
+				      .header("Access-Control-Allow-Credentials", "true")
+				      .header("Access-Control-Allow-Headers",
+				        "origin, content-type, accept, authorization")
+				      .header("Access-Control-Allow-Methods", 
+				        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+				      .entity("[]")
+				      .build();
+			//return null;
+			//return sendResult(player,player.getGameId(),player.getUser());
+		}
+//		return Response.ok()
+//		      .header("Access-Control-Allow-Origin", "*")
+//		      .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+//				.entity("{asdasd}")
+//		      .allow("OPTIONS").build();
 	}
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
