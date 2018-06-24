@@ -32,7 +32,8 @@ public class TrendResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response reqHelp(Player player){
+	//public Response reqHelp(Player player){
+	public 	List<Recommendation> reqHelp(Player player){
 		System.out.println("Analyser Started");
 		System.out.println("User: "+player.getUser()); 
 		System.out.println("Game id: "+player.getGameId()); 
@@ -40,26 +41,27 @@ public class TrendResource {
 		Boolean validity=addTrendstoDB(player.getGameId(),player.getUser());
 		if (validity.equals(true)) {
 			addEventstoDB(player.getGameId());
-			Gson gson = new Gson();
-			return Response
-				      .status(200)
-				      .header("Access-Control-Allow-Origin", "*")
-				      .entity(gson.toJson(sendResult(player,player.getGameId(),player.getUser())))
-				      .build();
-//			return sendResult(player,player.getGameId(),player.getUser());
+//			Gson gson = new Gson();
+//			return Response
+//				      .status(200)
+//				      .header("Access-Control-Allow-Origin", "*")
+//				      .entity(gson.toJson(sendResult(player,player.getGameId(),player.getUser())))
+//				      .build();
+			return sendResult(player,player.getGameId(),player.getUser());
 		}
 		else {
-			return Response
-				      .status(200)
-				      .header("Access-Control-Allow-Origin", "*")
-				      .header("Access-Control-Allow-Credentials", "true")
-				      .header("Access-Control-Allow-Headers",
-				        "origin, content-type, accept, authorization")
-				      .header("Access-Control-Allow-Methods", 
-				        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-				      .entity("[]")
-				      .build();
+//			return Response
+//				      .status(200)
+//				      .header("Access-Control-Allow-Origin", "*")
+//				      .header("Access-Control-Allow-Credentials", "true")
+//				      .header("Access-Control-Allow-Headers",
+//				        "origin, content-type, accept, authorization")
+//				      .header("Access-Control-Allow-Methods", 
+//				        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+//				      .entity("[]")
+//				      .build();
 			//return null;
+			return sendResult(player,player.getGameId(),player.getUser());
 		}
 		
 		
