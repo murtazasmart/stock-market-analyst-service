@@ -182,21 +182,5 @@ public class TrendResource {
 		}
 		return trendService.sendResult(player,gameid,useId);  
 	}
-	
-	public void getHelp(){
-		Client client =ClientBuilder.newClient();
-		
-		WebTarget target =client.target("http://localhost:8080/testmewanrest/webapi/messages");
-		Builder builder= target.request(MediaType.APPLICATION_JSON);
-		Response response = builder.get();
-		
-		List <Messagexx> messages= response.readEntity(new GenericType<List<Messagexx>>(){});
-		for (Messagexx message:messages){
-			
-			System.out.println("mmmmmm"+message.getMessage()); 
-		}
-		
-		
-	}
 
 }
